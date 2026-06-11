@@ -25,5 +25,14 @@ void mostrarMenu()
 
 void iniciarJuego()
 {
-    printf("\nIniciando juego...\n");
+    jugarNivel(1);
+    jugarNivel(2);
+    jugarNivel(3);
+
+    printf("\nJuego terminado\n");
+}
+
+void jugarNivel(int numeroNivel)
+{
+    printf("\nCargando nivel %d...\n", numeroNivel);
 }
