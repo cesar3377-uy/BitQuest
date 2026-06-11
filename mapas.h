@@ -21,4 +21,8 @@ extern int totalMonedasNivel1;
 extern int totalMonedasNivel2;
 extern int totalMonedasNivel3;
 
+void cargarNivel1();
+void cargarNivel2();
+void cargarNivel3();
+
 #endif
