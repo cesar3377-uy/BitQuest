@@ -18,7 +18,7 @@ typedef struct {
 void imprimir_ventana(char mapa[FILAS_MAPA][COLUMNAS_MAPA], EstadoJuego *estado);
 void imprimir_stats(EstadoJuego *estado, int total_monedas);
 void buscar_jugador(char mapa[FILAS_MAPA][COLUMNAS_MAPA], int *fila, int *col);
-void mover_jugador(
+int mover_jugador(
     char mapa[FILAS_MAPA][COLUMNAS_MAPA],
     EstadoJuego *estado,
     char tecla
