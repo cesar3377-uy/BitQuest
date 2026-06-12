@@ -70,7 +70,7 @@ calcularPuntaje:
     sub rax, r11 ; restar a las monedas y niveles
 
     cmp rax, 0
-    jge .puntaje_valido
+jge .fin_puntaje
 
     xor rax, rax ; puntaje negativo devuelve 0
 
