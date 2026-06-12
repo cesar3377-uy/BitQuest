@@ -4,6 +4,8 @@
 
 void mostrarMenu();
 void iniciarJuego();
+void jugarNivel(int numeroNivel);
+void mostrarResumenNivel(int nivel, int monedas, int pasos);
 
 int main()
 {
@@ -35,4 +37,16 @@ void iniciarJuego()
 void jugarNivel(int numeroNivel)
 {
     printf("\nCargando nivel %d...\n", numeroNivel);
+}
+
+void mostrarResumenNivel(int nivel, int monedas, int pasos)
+{
+    printf("\n");
+    printf("=====================================\n");
+    printf("         NIVEL COMPLETADO\n");
+    printf("=====================================\n");
+    printf("Nivel: %d\n", nivel);
+    printf("Monedas recolectadas: %d\n", monedas);
+    printf("Pasos realizados: %d\n", pasos);
+    printf("=====================================\n");
 }
