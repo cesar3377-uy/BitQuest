@@ -98,6 +98,6 @@ int mover_jugador(char mapa[FILAS_MAPA][COLUMNAS_MAPA], EstadoJuego *estado, cha
     estado->jugador_fila = nuevaFila;
     estado->jugador_col  = nuevaCol;
     estado->pasos++;
-
+    
     return 0;
 }
