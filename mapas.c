@@ -42,15 +42,25 @@ void cargarNivel1()
         nivel1[FILAS_MAPA-1][j]='#';
     }
 
-    nivel1[1][1]='P';
+        nivel1[1][1]='P';
+
+    for(i=5;i<25;i++)
+    {
+        nivel1[10][i]='#';
+    }
+
+    for(i=15;i<35;i++)
+    {
+        nivel1[20][i]='#';
+    }
 
     nivel1[5][5]='M';
-    nivel1[10][10]='M';
-    nivel1[15][15]='M';
+    nivel1[10][30]='M';
+    nivel1[25][10]='M';
 
-    nivel1[20][20]='K';
+    nivel1[30][30]='K';
 
-    nivel1[25][25]='D';
+    nivel1[40][40]='D';
 
     nivel1[50][50]='E';
 
@@ -81,16 +91,35 @@ void cargarNivel2()
         nivel2[FILAS_MAPA-1][j]='#';
     }
 
-    nivel2[1][1]='P';
+       nivel2[1][1]='P';
 
-    nivel2[8][8]='M';
-    nivel2[16][16]='M';
-    nivel2[24][24]='M';
-    nivel2[32][32]='M';
+    for(i=5;i<50;i++)
+    {
+        nivel2[8][i]='#';
+    }
 
-    nivel2[40][20]='K';
+    for(i=10;i<55;i++)
+    {
+        nivel2[20][i]='#';
+    }
 
-    nivel2[45][30]='D';
+    for(i=5;i<40;i++)
+    {
+        nivel2[i][25]='#';
+    }
+
+    nivel2[8][20]='.';
+    nivel2[20][40]='.';
+    nivel2[30][25]='.';
+
+    nivel2[5][50]='M';
+    nivel2[15][10]='M';
+    nivel2[30][45]='M';
+    nivel2[45][15]='M';
+
+    nivel2[50][50]='K';
+
+    nivel2[40][40]='D';
 
     nivel2[55][55]='E';
 
@@ -121,17 +150,45 @@ void cargarNivel3()
         nivel3[FILAS_MAPA-1][j]='#';
     }
 
-    nivel3[1][1]='P';
+        nivel3[1][1]='P';
 
-    nivel3[10][10]='M';
-    nivel3[20][20]='M';
-    nivel3[30][30]='M';
-    nivel3[40][40]='M';
-    nivel3[50][20]='M';
+    for(i=2;i<58;i++)
+    {
+        nivel3[5][i]='#';
+        nivel3[15][i]='#';
+        nivel3[25][i]='#';
+        nivel3[35][i]='#';
+        nivel3[45][i]='#';
+    }
 
-    nivel3[35][10]='K';
+    nivel3[5][10]='.';
+    nivel3[15][20]='.';
+    nivel3[25][30]='.';
+    nivel3[35][40]='.';
+    nivel3[45][50]='.';
 
-    nivel3[45][15]='D';
+    for(i=5;i<50;i++)
+    {
+        nivel3[i][12]='#';
+        nivel3[i][24]='#';
+        nivel3[i][36]='#';
+        nivel3[i][48]='#';
+    }
+
+    nivel3[10][12]='.';
+    nivel3[20][24]='.';
+    nivel3[30][36]='.';
+    nivel3[40][48]='.';
+
+    nivel3[8][8]='M';
+    nivel3[18][18]='M';
+    nivel3[28][28]='M';
+    nivel3[38][38]='M';
+    nivel3[48][48]='M';
+
+    nivel3[52][10]='K';
+
+    nivel3[54][40]='D';
 
     nivel3[58][58]='E';
 
