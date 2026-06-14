@@ -1,11 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "juego.h"
-/*
- * mover_jugador
- * Procesa una tecla WASD y actualiza el estado del juego.
- * Retorna 1 si el jugador llego a la salida (E), 0 en cualquier otro caso.
- */
+
+extern int validarMovimiento(char *mapa, int columnas, int fila, int col);
+extern int detectarObjeto(char *mapa, int columnas, int fila, int col, char objeto);
+
 void buscar_jugador(char mapa[FILAS_MAPA][COLUMNAS_MAPA], int *fila, int *col)
 {
     for (int i = 0; i < FILAS_MAPA; i++) {
@@ -24,20 +23,16 @@ void buscar_jugador(char mapa[FILAS_MAPA][COLUMNAS_MAPA], int *fila, int *col)
 void imprimir_ventana(char mapa[FILAS_MAPA][COLUMNAS_MAPA], EstadoJuego *estado)
 {
     system("cls");
-
     int cam_fila = estado->jugador_fila - VENTANA_FILS / 2;
     int cam_col  = estado->jugador_col  - VENTANA_COLS / 2;
-
     if (cam_fila < 0) cam_fila = 0;
     if (cam_col  < 0) cam_col  = 0;
     if (cam_fila > FILAS_MAPA    - VENTANA_FILS) cam_fila = FILAS_MAPA    - VENTANA_FILS;
     if (cam_col  > COLUMNAS_MAPA - VENTANA_COLS) cam_col  = COLUMNAS_MAPA - VENTANA_COLS;
-
     for (int i = 0; i < VENTANA_FILS; i++) {
         for (int j = 0; j < VENTANA_COLS; j++) {
             int mf = cam_fila + i;
             int mc = cam_col  + j;
-
             if (mf == estado->jugador_fila && mc == estado->jugador_col)
                 printf("P");
             else
@@ -45,7 +40,6 @@ void imprimir_ventana(char mapa[FILAS_MAPA][COLUMNAS_MAPA], EstadoJuego *estado)
         }
         printf("\n");
     }
-
     int total = (estado->nivel == 1) ? totalMonedasNivel1 :
                 (estado->nivel == 2) ? totalMonedasNivel2 :
                                        totalMonedasNivel3;
@@ -63,11 +57,7 @@ void imprimir_stats(EstadoJuego *estado, int total_monedas)
     printf("Movimiento: W A S D  |  Salir: Q\n");
 }
 
- int mover_jugador(
-    char mapa[FILAS_MAPA][COLUMNAS_MAPA],
-    EstadoJuego *estado,
-    char tecla
-)
+int mover_jugador(char mapa[FILAS_MAPA][COLUMNAS_MAPA], EstadoJuego *estado, char tecla)
 {
     int nuevaFila = estado->jugador_fila;
     int nuevaCol  = estado->jugador_col;
@@ -79,28 +69,24 @@ void imprimir_stats(EstadoJuego *estado, int total_monedas)
         case 'D': case 'd': nuevaCol++;  break;
         default: return 0;
     }
-    if(nuevaFila < 0 || nuevaFila >= FILAS_MAPA)  return 0;
-    if(nuevaCol  < 0 || nuevaCol  >= COLUMNAS_MAPA) return 0;
-    char celdaDestino = mapa[nuevaFila][nuevaCol];
-    if(celdaDestino == '#')
+    if(!validarMovimiento(&mapa[0][0], COLUMNAS_MAPA, nuevaFila, nuevaCol))
         return 0;
-    if(celdaDestino == 'D' && estado->llave == 0)
-        return 0;
-    if(celdaDestino == 'M')
+    if(detectarObjeto(&mapa[0][0], COLUMNAS_MAPA, nuevaFila, nuevaCol, 'M'))
     {
         estado->monedas++;
         mapa[nuevaFila][nuevaCol] = '.';
     }
-    else if(celdaDestino == 'K')
+    else if(detectarObjeto(&mapa[0][0], COLUMNAS_MAPA, nuevaFila, nuevaCol, 'K'))
     {
         estado->llave = 1;
         mapa[nuevaFila][nuevaCol] = '.';
     }
-    else if(celdaDestino == 'D')
+    else if(detectarObjeto(&mapa[0][0], COLUMNAS_MAPA, nuevaFila, nuevaCol, 'D'))
     {
+        if(estado->llave == 0) return 0;
         mapa[nuevaFila][nuevaCol] = '.';
     }
-    else if(celdaDestino == 'E')
+    else if(detectarObjeto(&mapa[0][0], COLUMNAS_MAPA, nuevaFila, nuevaCol, 'E'))
     {
         mapa[estado->jugador_fila][estado->jugador_col] = '.';
         estado->jugador_fila = nuevaFila;
