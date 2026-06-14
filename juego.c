@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "juego.h"
 /*
  * mover_jugador
@@ -54,4 +55,53 @@ int mover_jugador(
     estado->pasos++;
     
     return 0;
+}
+void imprimir_ventana(char mapa[FILAS_MAPA][COLUMNAS_MAPA], EstadoJuego *estado)
+{
+    int inicioFila = estado->jugador_fila - VENTANA_FILS / 2;
+    int inicioCol  = estado->jugador_col - VENTANA_COLS / 2;
+
+    if(inicioFila < 0) inicioFila = 0;
+    if(inicioCol < 0) inicioCol = 0;
+    if(inicioFila + VENTANA_FILS > FILAS_MAPA) inicioFila = FILAS_MAPA - VENTANA_FILS;
+    if(inicioCol + VENTANA_COLS > COLUMNAS_MAPA) inicioCol = COLUMNAS_MAPA - VENTANA_COLS;
+
+    for(int i = 0; i < VENTANA_FILS; i++)
+    {
+        for(int j = 0; j < VENTANA_COLS; j++)
+        {
+            int filaMapa = inicioFila + i;
+            int colMapa  = inicioCol + j;
+
+            if(filaMapa == estado->jugador_fila && colMapa == estado->jugador_col)
+                printf("P");
+            else
+                printf("%c", mapa[filaMapa][colMapa]);
+        }
+        printf("\n");
+    }
+}
+
+void imprimir_stats(EstadoJuego *estado, int total_monedas)
+{
+    printf("Nivel: %d\n", estado->nivel);
+    printf("Monedas: %d / %d\n", estado->monedas, total_monedas);
+    printf("Pasos: %d\n", estado->pasos);
+    printf("Llave: %s\n", estado->llave ? "Sí" : "No");
+}
+
+void buscar_jugador(char mapa[FILAS_MAPA][COLUMNAS_MAPA], int *fila, int *col)
+{
+    for(int i = 0; i < FILAS_MAPA; i++)
+    {
+        for(int j = 0; j < COLUMNAS_MAPA; j++)
+        {
+            if(mapa[i][j] == 'P')
+            {
+                *fila = i;
+                *col  = j;
+                return;
+            }
+        }
+    }
 }
