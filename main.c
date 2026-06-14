@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "juego.h"
 #include "mapas.h"
+#include <conio.h>
 
 void mostrarMenu();
 void iniciarJuego();
@@ -39,27 +40,60 @@ void jugarNivel(int numeroNivel)
     EstadoJuego estado;
 
     estado.monedas = 0;
-    estado.pasos = 0;
-    estado.llave = 0;
-    estado.nivel = numeroNivel;
+    estado.pasos   = 0;
+    estado.llave   = 0;
+    estado.nivel   = numeroNivel;
 
-    printf("\n___________________________________\n");
-    printf("Cargando nivel %d\n", numeroNivel);
-    printf("_____________________________________\n");
+    char (*mapa_actual)[COLUMNAS_MAPA];
 
     switch(numeroNivel)
     {
         case 1:
             cargarNivel1();
+            mapa_actual = nivel1;
             break;
 
         case 2:
             cargarNivel2();
+            mapa_actual = nivel2;
             break;
 
         case 3:
             cargarNivel3();
+            mapa_actual = nivel3;
             break;
+
+        default:
+            return;
+    }
+
+    buscar_jugador(
+        mapa_actual,
+        &estado.jugador_fila,
+        &estado.jugador_col
+    );
+
+    char tecla;
+    int nivel_terminado = 0;
+
+    while(!nivel_terminado)
+    {
+        imprimir_ventana(
+            mapa_actual,
+            &estado
+        );
+
+        tecla = _getch();
+
+        if(tecla=='q' || tecla=='Q')
+            break;
+
+        nivel_terminado =
+            mover_jugador(
+                mapa_actual,
+                &estado,
+                tecla
+            );
     }
 
     mostrarResumenNivel(
