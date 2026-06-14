@@ -4,6 +4,9 @@
  * Procesa una tecla WASD y actualiza el estado del juego.
  * Retorna 1 si el jugador llego a la salida (E), 0 en cualquier otro caso.
  */
+extern int validarMovimiento(char *mapa, int columnas, int fila, int col);
+extern int detectarObjeto(char *mapa, int columnas, int fila, int col, char objeto);
+
 int mover_jugador(
     char mapa[FILAS_MAPA][COLUMNAS_MAPA],
     EstadoJuego *estado,
@@ -20,28 +23,24 @@ int mover_jugador(
         case 'D': case 'd': nuevaCol++;  break;
         default: return 0;
     }
-    if(nuevaFila < 0 || nuevaFila >= FILAS_MAPA)  return 0;
-    if(nuevaCol  < 0 || nuevaCol  >= COLUMNAS_MAPA) return 0;
-    char celdaDestino = mapa[nuevaFila][nuevaCol];
-    if(celdaDestino == '#')
+    if(!validarMovimiento(&mapa[0][0], COLUMNAS_MAPA, nuevaFila, nuevaCol))
         return 0;
-    if(celdaDestino == 'D' && estado->llave == 0)
-        return 0;
-    if(celdaDestino == 'M')
+    if(detectarObjeto(&mapa[0][0], COLUMNAS_MAPA, nuevaFila, nuevaCol, 'M'))
     {
         estado->monedas++;
         mapa[nuevaFila][nuevaCol] = '.';
     }
-    else if(celdaDestino == 'K')
+    else if(detectarObjeto(&mapa[0][0], COLUMNAS_MAPA, nuevaFila, nuevaCol, 'K'))
     {
         estado->llave = 1;
         mapa[nuevaFila][nuevaCol] = '.';
     }
-    else if(celdaDestino == 'D')
+    else if(detectarObjeto(&mapa[0][0], COLUMNAS_MAPA, nuevaFila, nuevaCol, 'D'))
     {
+        if(estado->llave == 0) return 0;
         mapa[nuevaFila][nuevaCol] = '.';
     }
-    else if(celdaDestino == 'E')
+    else if(detectarObjeto(&mapa[0][0], COLUMNAS_MAPA, nuevaFila, nuevaCol, 'E'))
     {
         mapa[estado->jugador_fila][estado->jugador_col] = '.';
         estado->jugador_fila = nuevaFila;
@@ -53,6 +52,6 @@ int mover_jugador(
     estado->jugador_fila = nuevaFila;
     estado->jugador_col  = nuevaCol;
     estado->pasos++;
-
+    
     return 0;
 }
